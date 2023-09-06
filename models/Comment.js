@@ -2,32 +2,38 @@ const { Model, DataTypes } = require('sequelize');
 
 const sequelize = require('../config/connection');
 
-class ProductTag extends Model {}
+class Comment extends Model {}
 
-ProductTag.init(
+Comment.init(
   {
-    productId: {
+    content: {
+      allowNull: false,
+      type: DataTypes.STRING, 
+    },
+    postId: {
+      allowNull: false,
       type: DataTypes.INTEGER,
       references: {
-        model: 'product',
+        model: 'post',
         key: 'id',
       }
     },
-    tagId: {
+    userId: {
+      allowNull: false,
       type: DataTypes.INTEGER,
       references: {
-        model: 'tag',
+        model: 'user',
         key: 'id',
       }
     }
   },
   {
     sequelize,
-    timestamps: false,
+    timestamps: true,
     freezeTableName: true,
     underscored: true,
-    modelName: 'product_tag',
+    modelName: 'comment',
   }
 );
 
-module.exports = ProductTag;
+module.exports = Comment;
