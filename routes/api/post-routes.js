@@ -3,7 +3,8 @@ const { User, Post, Comment } = require('../../models');
 
 // GET /api/posts
 router.get('/', async (req, res) => {
-  res.status(200).json({});
+  let posts = await Post.findAll()
+  res.status(200).json(posts);
 });
 
 // GET /api/posts/:id
