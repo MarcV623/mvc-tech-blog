@@ -9,7 +9,20 @@ router.get('/', async (req, res) => {
 
 // GET /api/posts/:id
 router.get('/:id', async (req, res) => {
-  res.status(200).json({});
+  const id = req.params.id
+
+  let results = await Post.findAll({
+    where: {
+      id: id
+    }
+  })
+
+  if (results.length === 0) {
+    res.status(404).json({ error: 'Invalid Id Provided' })
+  } else {
+    let post = results[0]
+    res.status(200).json(post);
+  }
 });
 
 // PUT /api/posts/:id
