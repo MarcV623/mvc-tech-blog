@@ -25,6 +25,19 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// GET /api/posts/:id/comments
+router.get('/:id/comments', async (req, res) => {
+  const id = req.params.id
+
+  const results = await Comment.findAll({
+    where: {
+      postId: id
+    }
+  })
+
+  res.status(200).json(results);
+});
+
 // PUT /api/posts/:id
 router.put('/:id', async (req, res) => {
   const id = req.params.id
