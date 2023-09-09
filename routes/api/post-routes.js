@@ -44,20 +44,21 @@ router.put('/:id', async (req, res) => {
 
 // DELETE /api/posts/:id
 router.delete('/:id', async (req, res) => {
-  try {
-    const post = await Post.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
-    if (!post) {
-      res.status(404).json({ message: 'No user with this id!' });
-      return;
+  const id = req.params.id
+
+  let results = await Comment.destroy({
+    where: {
+      postId: id,
     }
-    res.status(200).json(post);
-  } catch (err) {
-    res.status(500).json(err);
-  }
+  })
+
+  results = await Post.destroy({
+    where: {
+      id: id
+    }
+  })
+
+  res.status(200).end();
 });
 
 // POST /api/posts/:id/comments
