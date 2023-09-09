@@ -34,7 +34,13 @@ router.post('/authorization', async (req, res) => {
 
 // DELETE /api/users/authorization
 router.delete('/authorization', async (req, res) => {
-  res.status(200).json({});
+  if (!req.session.logged_in) {
+    res.status(400).end();
+  } else {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  }
 });
 
 module.exports = router;
