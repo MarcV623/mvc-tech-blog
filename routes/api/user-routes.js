@@ -9,7 +9,27 @@ router.post('/', async (req, res) => {
 
 // POST /api/users/authorization
 router.post('/authorization', async (req, res) => {
-  res.status(200).json({});
+  const user = await User.findOne({
+    where: {
+      username: req.body.username
+    }
+  });
+
+  if (user === null) {
+    res.status(400).end();
+  } else {
+    const passwordMatch = await user.checkPassword(req.body.password);
+
+    if (!passwordMatch) {
+      res.status(400).end();
+    } else {
+      req.session.save(() => {
+        req.session.user_id = user.id;
+        req.session.logged_in = true;
+        res.status(200).json(user);
+      });
+    }
+  }
 });
 
 // DELETE /api/users/authorization
