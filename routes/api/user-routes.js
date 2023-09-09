@@ -3,7 +3,8 @@ const { User, Post, Comment } = require('../../models');
 
 // POST /api/users
 router.post('/', async (req, res) => {
-  res.status(200).json({});
+  const results = await User.create(req.body)
+  res.status(200).json(results);
 });
 
 // POST /api/users/authorization
