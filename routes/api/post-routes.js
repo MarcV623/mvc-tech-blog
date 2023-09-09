@@ -26,23 +26,21 @@ router.get('/:id', async (req, res) => {
 });
 
 // PUT /api/posts/:id
-  router.put('/:id', async (req, res) => {
-    try {
-      const [affectedRows] = await Post.update(req.body, {
-        where: {
-          id: req.params.id,
-        },
-        
-      });
-      if (affectedRows > 0) {
-        res.status(200).json(affectedRows);
-      } else {
-        res.status(404).end();
-      }
-      } catch (err) {
-        res.status(500).json(err);
-      }
-     });
+router.put('/:id', async (req, res) => {
+  const id = req.params.id
+
+  const results = await Post.update(req.body, {
+    where: {
+      id: id,
+    }
+  })
+
+  if (results[0] > 0) {
+    res.status(200).end();
+  } else {
+    res.status(404).end();
+  }
+});
 
 // DELETE /api/posts/:id
 router.delete('/:id', async (req, res) => {
@@ -64,7 +62,6 @@ router.delete('/:id', async (req, res) => {
 
 // POST /api/posts/:id/comments
 router.post('/:id/comments', async (req, res) => {
-  
   res.status(200).json({});
 });
 
