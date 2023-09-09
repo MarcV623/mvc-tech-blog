@@ -55,6 +55,17 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// POST /api/posts
+router.post('/', async (req, res) => {
+  const results = await Post.create(req.body)
+  res.status(200).json(results);
+});
+
+// POST /api/posts/:id/comments
+router.post('/:id/comments', async (req, res) => {
+  res.status(200).json({});
+});
+
 // DELETE /api/posts/:id
 router.delete('/:id', async (req, res) => {
   const id = req.params.id
@@ -72,11 +83,6 @@ router.delete('/:id', async (req, res) => {
   })
 
   res.status(200).end();
-});
-
-// POST /api/posts/:id/comments
-router.post('/:id/comments', async (req, res) => {
-  res.status(200).json({});
 });
 
 module.exports = router;
