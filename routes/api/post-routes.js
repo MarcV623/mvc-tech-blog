@@ -63,7 +63,14 @@ router.post('/', async (req, res) => {
 
 // POST /api/posts/:id/comments
 router.post('/:id/comments', async (req, res) => {
-  res.status(200).json({});
+  const id = req.params.id
+
+  const results = await Comment.create({
+    ...req.body,
+    postId: id
+  })
+
+  res.status(200).json(results);
 });
 
 // DELETE /api/posts/:id
