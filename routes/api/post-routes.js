@@ -26,22 +26,45 @@ router.get('/:id', async (req, res) => {
 });
 
 // PUT /api/posts/:id
-router.put('/:id', async (req, res) => {
-  res.status(200).json({});
-});
+  router.put('/:id', async (req, res) => {
+    try {
+      const [affectedRows] = await Post.update(req.body, {
+        where: {
+          id: req.params.id,
+        },
+        
+      });
+      if (affectedRows > 0) {
+        res.status(200).json(affectedRows);
+      } else {
+        res.status(404).end();
+      }
+      } catch (err) {
+        res.status(500).json(err);
+      }
+     });
 
 // DELETE /api/posts/:id
 router.delete('/:id', async (req, res) => {
-  res.status(200).json({});
-});
-
-// GET /api/posts/:id/comments
-router.get('/:id/comments', async (req, res) => {
-  res.status(200).json({});
+  try {
+    const post = await Post.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    if (!post) {
+      res.status(404).json({ message: 'No user with this id!' });
+      return;
+    }
+    res.status(200).json(post);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // POST /api/posts/:id/comments
 router.post('/:id/comments', async (req, res) => {
+  
   res.status(200).json({});
 });
 
