@@ -4,7 +4,6 @@ const handlebars = require('express-handlebars');
 const path = require('path');
 
 const controllers = require('./controllers');
-
 const sequelize = require('./config/connection');
 
 const app = express();
