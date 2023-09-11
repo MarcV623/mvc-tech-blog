@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 
-const routes = require('./routes');
+const controllers = require('./controllers');
 
 const sequelize = require('./config/connection');
 
@@ -20,7 +20,7 @@ app.use(session(sessionOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(routes);
+app.use(controllers);
 
 // Force true to drop/recreate table(s) on every sync
 sequelize.sync({ force: true }).then(() => {
