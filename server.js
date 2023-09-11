@@ -1,5 +1,7 @@
 const express = require('express');
 const session = require('express-session');
+const handlebars = require('express-handlebars');
+const path = require('path');
 
 const controllers = require('./controllers');
 
@@ -14,6 +16,14 @@ const sessionOptions = {
   resave: false,
   saveUninitialized: true
 }
+
+// Create the Handlebars.js engine object with custom helper functions
+const hbs = handlebars.create({});
+
+// Inform Express.js which template engine we're using
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session(sessionOptions));
 
